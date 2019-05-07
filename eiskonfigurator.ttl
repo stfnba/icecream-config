@@ -32,7 +32,7 @@ schema:CreativeWork a owl:Class ;
 			rdfs:comment "XXXXX"@de .
 			
 schema:Product a owl:Class ;
-			rdfs:label "Producten"@de ;
+			rdfs:label "Produkte"@de ;
 			rdfs:subClassOf schema:CreativeWork ;
 			rdfs:comment "XXXXX"@de .
 			
@@ -42,7 +42,7 @@ schema:QuantitativeValue a owl:Class ;
 			rdfs:comment "XXXXX"@de .
 
 schema:Person a owl:Class ;
-			rdfs:label "Nutzegruppen"@de ;
+			rdfs:label "Nutzergruppen"@de ;
 			rdfs:subClassOf schema:CreativeWork ;
 			rdfs:comment "XXXXX"@de .
 			
@@ -88,7 +88,7 @@ module:Fest a owl:Class ;
 			rdfs:subClassOf module:Toppings ;
 			rdfs:isDefinedBy <https://bmake.th-brandenburg.de/module/> .
 			
-module:Strukture a owl:Class ;
+module:Struktur a owl:Class ;
 			rdfs:label "Info"@de ;
 			rdfs:comment "XXXXXX"@de ;
 			rdfs:subClassOf module:Fest ;
