@@ -1,0 +1,853 @@
+@prefix schema: <https://schema.org/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix ice: <https://bmake.th-brandenburg.de/ice/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix voaf: <http://purl.org/vocommons/voaf#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+
+
+	### Definition of Re-Used Classes ###
+
+	schema:Product a owl:Class ;
+		rdfs:label "Product"@de ;
+		rdfs:comment "Das essbare Produkt zusammengeesetz aus der Eis Creme und den Toppings."@de ;
+		rdfs:isDefinedBy <https://schema.org/> .
+
+	ice:SoftServe a owl:Class ;
+		rdfs:label "SoftServe"@de ;
+		rdfs:comment "Das Endprodukt zusammengesetz aus allen Elementen wie Eis Creme, Toppings sowie Behältnis."@de ;
+		rdfs:subClassOf schema:Product ;
+		rdfs:isDefinedBy <https://bmake.th-brandenburg.de/ice/> .
+
+	schema:Enumeration a owl:Class ;
+		rdfs:label "Enumeration"@de ;
+		rdfs:comment "Bedeutet auch Aufzählung."@de ;
+		rdfs:isDefinedBy <https://schema.org/> .
+
+	### Definition of specific Classes ###
+
+	ice:ContainerType a owl:Class;
+		rdfs:label "Container"@de, "Eisnamen"@de ;
+		rdfs:comment "Behältnis für das Eis."@de ;
+		rdfs:subClassOf schema:Enumeration ;
+		rdfs:isDefinedBy <https://bmake.th-brandenburg.de/ice/> .
+
+	ice:Topping a owl:Class ;
+		rdfs:label "Topping"@de ;
+		rdfs:comment "Zusatzprodukt, welches als Garnierung für das Eis dient."@de ;
+		rdfs:subClassOf schema:Product ;
+		rdfs:isDefinedBy <https://bmake.th-brandenburg.de/ice/> .
+			
+	ice:IceCream a owl:Class ;
+		rdfs:label "Ice Cream"@de ;
+		rdfs:comment "Beschreibt das Eis an sich und beinhaltet alle Sorten.."@de ;
+		rdfs:subClassOf schema:Product ;
+		rdfs:isDefinedBy <https://bmake.th-brandenburg.de/ice/> .
+
+
+	### Object properties ###
+	
+	ice:comesIn a owl:ObjectProperty ;
+		rdfs:label "comes in"@en, "kommt in"@de ;
+		rdfs:comment "Ist die Präsposition, welche beschreibt dass etwas in das Behaltnis getan wird."@de ;
+		rdfs:domain ice:SoftServe ;
+		rdfs:range ice:ContainerType ;
+		rdfs:isDefinedBy <https://bmake.th-brandenburg.de/ice/> .
+
+	ice:additionalIngredient a owl:ObjectProperty ;
+		rdfs:label "additional Ingredient"@en, "ist ewitere Zutat"@de ;
+		rdfs:comment "Beschreibt eine zusätzliche Zutat welche dem Hauptprodukt beigefügt wird."@de ;
+		rdfs:domain ice:SoftServe ;
+		rdfs:range ice:Topping ;
+		rdfs:isDefinedBy <https://bmake.th-brandenburg.de/ice/> .
+
+	ice:mainIngredient a owl:ObjectProperty ;
+		rdfs:label "main Ingredient"@en, "ist Hauptzutat"@de ;
+		rdfs:comment "Beschreibt die Hauptzutat, welche angeboten wird."@de ;
+		rdfs:domain ice:SoftServe ;
+		rdfs:range ice:IceCream ;
+		rdfs:isDefinedBy <https://bmake.th-brandenburg.de/ice/> .
+
+	### Datatype Properties ###
+
+	ice:orderNumber a owl:DatatypeProperty ;
+		rdfs:label "order Number"@en, "Bestellnummer"@de ;
+		rdfs:comment "Ist die Nummer, welche der Kunde im Bestellvorgang erhalten hat."@de ;
+		rdfs:domain ice:SoftServe ;
+		rdfs:range schema:Number ;
+		rdfs:isDefinedBy <https://bmake.th-brandenburg.de/ice/> .
+
+	ice:pickUpTime a owl:DatatypeProperty ;
+		rdfs:label "Pickuptime"@en, "Abholzeit"@de ;
+		rdfs:comment "Ist die Zeit, an der das bestellte fertige Produkt abgeholt werden kann."@de ;
+		rdfs:domain ice:SoftServe ;
+		rdfs:range schema:Date ;
+		rdfs:isDefinedBy <https://bmake.th-brandenburg.de/ice/> .
+
+	schema:description a owl:DatatypeProperty ;
+		rdfs:label "description"@en, "Bezeichnung"@de ;
+		rdfs:comment "Ist die nähere Beschreibung des fertigen Produktes."@de ;
+		rdfs:domain schema:Product ;
+		rdfs:range schema:Text ;
+		rdfs:isDefinedBy <https://schema.org/> .
+
+	ice:containsLactose a owl:DatatypeProperty ;
+		rdfs:label "contains Lactose"@en, "beinhaltet Laktose"@de ;
+		rdfs:comment "XXXX"@de ;
+		rdfs:domain schema:Product ;
+		rdfs:range schema:Boolean ;
+		rdfs:isDefinedBy <https://bmake.th-brandenburg.de/ice/> .
+
+	ice:containsNuts a owl:DatatypeProperty ;
+		rdfs:label "contains Nuts"@en, "enthaelt Nuesse"@de ;
+		rdfs:comment "In dem Produkt sind Nüsse enthalten."@de ;
+		rdfs:domain schema:Product ;
+		rdfs:range schema:Boolean ;
+		rdfs:isDefinedBy <https://bmake.th-brandenburg.de/ice/> .
+
+	ice:isVegan a owl:DatatypeProperty ;
+		rdfs:label "is vegan"@en, "ist vegan"@de ;
+		rdfs:comment "Es sind keine tierischen Inhaltsstoffe enthalten."@de ;
+		rdfs:domain schema:Product ;
+		rdfs:range schema:Boolean ;
+		rdfs:isDefinedBy <https://bmake.th-brandenburg.de/ice/> .
+
+	ice:containsGluten a owl:DatatypeProperty ;
+		rdfs:label "contains Gluten"@en, "enthaelt Gluten"@de ;
+		rdfs:comment "Der Stoff Gluten ist enthalten."@de ;
+		rdfs:domain schema:Product ;
+		rdfs:range schema:Boolean ;
+		rdfs:isDefinedBy <https://bmake.th-brandenburg.de/ice/> .
+
+	ice:isSugarfree a owl:DatatypeProperty ;
+		rdfs:label "is Sugarfree"@en, "ist zuckerfrei"@de ;
+		rdfs:comment "Es ist kein Zucker enthalten."@de ;
+		rdfs:domain schema:Product ;
+		rdfs:range schema:Boolean ;
+		rdfs:isDefinedBy <https://bmake.th-brandenburg.de/ice/> .
+
+	ice:containsFructose a owl:DatatypeProperty ;
+		rdfs:label "contains Fructose"@en, "enthaelt Fruktose"@de ;
+		rdfs:comment "Der Stoff Fruktose ist enthalten."@de ;
+		rdfs:domain schema:Product ;
+		rdfs:range schema:Boolean ;
+		rdfs:isDefinedBy <https://bmake.th-brandenburg.de/ice/> .
+
+	schema:name a owl:DatatypeProperty ;
+		rdfs:label "name"@en, "Name"@de ;
+		rdfs:comment "Der Name des Produktes."@de ;
+		rdfs:domain schema:Product ;
+		rdfs:range schema:Text ;
+		rdfs:isDefinedBy <https://schema.org/> .
+
+	### IceCream ###
+
+	ice:Vanille a ice:IceCream;
+	rdfs:label "Vanille"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "true" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "false" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "false" .
+
+	ice:Schokolade a ice:IceCream;
+	rdfs:label "Schokolade"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "true" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "false" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "false" .
+
+	ice:Erdbeere a ice:IceCream;
+	rdfs:label "Erdbeere"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "false" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "true" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "true" .
+
+	ice:Pistazie a ice:IceCream;
+	rdfs:label "Pistazie"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "true" ;
+	ice:containsNuts "true" ;
+	ice:isVegan "false" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "false" .
+
+	ice:Walnuss a ice:IceCream;
+	rdfs:label "Walnuss"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "true" ;
+	ice:containsNuts "true" ;
+	ice:isVegan "false" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "false" .
+
+	ice:Haselnuss a ice:IceCream;
+	rdfs:label "Haselnuss"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "true" ;
+	ice:containsNuts "true" ;
+	ice:isVegan "false" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "false" .
+
+	ice:Wassermelone a ice:IceCream;
+	rdfs:label "Wassermelone"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "false" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "true" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "true" .
+
+	ice:Zitrone a ice:IceCream;
+	rdfs:label "Zitrone"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "false" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "true" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "true" .
+
+	ice:CookieDough a ice:IceCream;
+	rdfs:label "Cookie Dough"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "true" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "false" ;
+	ice:containsGluten "true" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "false" .
+
+	ice:Schokolade-Zuckerfrei a ice:IceCream;
+	rdfs:label "Schokolade-Zuckerfrei"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "true" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "false" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "true" ;
+	ice:containsFructose "false" .
+
+	ice:Vanille-Zuckerfrei a ice:IceCream;
+	rdfs:label "Vanille-Zuckerfrei"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "true" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "false" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "true" ;
+	ice:containsFructose "false" .
+
+	ice:Eierlikör a ice:IceCream;
+	rdfs:label "Eierlikör"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "true" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "false" ;
+	ice:containsGluten "true" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "false" .
+
+	ice:AfterEight a ice:IceCream;
+	rdfs:label "After Eight"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "true" ;
+	ice:containsNuts "true" ;
+	ice:isVegan "false" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "false" .
+
+	ice:Amarenakirsche a ice:IceCream;
+	rdfs:label "Amarenakirsche"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "false" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "true" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "true" .
+
+	ice:Amaretto a ice:IceCream;
+	rdfs:label "Amaretto"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "true" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "false" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "true" ;
+	ice:containsFructose "false" .
+
+	ice:Apfel a ice:IceCream;
+	rdfs:label "Apfel"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "false" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "true" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "true" .
+
+	ice:Applestrudel a ice:IceCream;
+	rdfs:label "Apfelstrudel"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "true" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "false" ;
+	ice:containsGluten "true" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "true" .
+
+	ice:Avocado a ice:IceCream;
+	rdfs:label "Avocado"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "false" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "true" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "true" ;
+	ice:containsFructose "false" .
+
+	ice:Blaubeer a ice:IceCream;
+	rdfs:label "Blaubeer"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "false" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "true" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "true" .
+
+	ice:Baileys a ice:IceCream;
+	rdfs:label "Baileys"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "true" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "false" ;
+	ice:containsGluten "true" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "false" .
+
+	ice:Bubblegum a ice:IceCream;
+	rdfs:label "Bubblegum"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "false" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "true" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "false" .
+
+	ice:Buttermilch a ice:IceCream;
+	rdfs:label "Buttermilch"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "true" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "false" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "true" ;
+	ice:containsFructose "false" .
+
+	ice:Cappucino a ice:IceCream;
+	rdfs:label "Cappucino"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "true" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "false" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "false" .
+
+	ice:Cashew a ice:IceCream;
+	rdfs:label "Cashew"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "false" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "true" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "true" ;
+	ice:containsFructose "false" .
+
+	ice:SaltedCaramel a ice:IceCream;
+	rdfs:label "Salted Caramel"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "false" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "true" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "false" .
+
+	ice:Orange a ice:IceCream;
+	rdfs:label "Orange"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "false" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "true" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "true" .
+
+	ice:Ananas a ice:IceCream;
+	rdfs:label "Ananas"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "false" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "true" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "true" .
+
+	ice:Shortbread a ice:IceCream;
+	rdfs:label "Shortbread"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "true" ;
+	ice:containsNuts "true" ;
+	ice:isVegan "false" ;
+	ice:containsGluten "true" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "false" .
+
+	ice:Granatapfel a ice:IceCream;
+	rdfs:label "Granatapfel"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "false" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "true" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "true" .
+
+	ice:Aprikose a ice:IceCream;
+	rdfs:label "Aprikose"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "false" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "true" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "true" .
+
+	ice:Azzuro a ice:IceCream;
+	rdfs:label "Azzuro"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "false" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "true" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "false" .
+
+	ice:Basilikum a ice:IceCream;
+	rdfs:label "Basilikum"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "false" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "true" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "true" ;
+	ice:containsFructose "false" .
+
+	ice:Mango a ice:IceCream;
+	rdfs:label "Mango"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "false" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "true" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "true" .
+
+	ice:Exotic a ice:IceCream;
+	rdfs:label "Exotic"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "false" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "true" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "true" .
+
+	ice:Cranberry a ice:IceCream;
+	rdfs:label "Cranberrye"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "false" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "true" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "true" .
+
+	ice:Grapefruit a ice:IceCream;
+	rdfs:label "Grapefruit"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "false" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "true" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "true" .
+
+	ice:Birne a ice:IceCream;
+	rdfs:label "Birne"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "false" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "true" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "true" .
+
+	ice:Erdnuss a ice:IceCream;
+	rdfs:label "Erdnuss"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "false" ;
+	ice:containsNuts "true" ;
+	ice:isVegan "true" ;
+	ice:containsGluten "true" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "false" .
+
+	### Toppings ###
+
+	ice:Schokostreusel a ice:Topping;
+	rdfs:label "Schokostreusel"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "true" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "false" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "false" .
+
+	ice:Regenbogenstreusel a ice:Topping;
+	rdfs:label "Regenbogenstreusel"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "false" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "true" ;
+	ice:containsGluten "true" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "false" .
+
+	ice:Schlagsahne a ice:Topping;
+	rdfs:label "Schlagsahne"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "true" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "false" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "false" .
+
+	ice:Schokoladensauce a ice:Topping;
+	rdfs:label "Schokoladensauce"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "true" ;
+	ice:containsNuts "true" ;
+	ice:isVegan "false" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "false" .
+
+	ice:Vanillesauce a ice:Topping;
+	rdfs:label "Vanillesauce"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "true" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "false" ;
+	ice:containsGluten "true" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "false" .
+
+	ice:Eierlikörsirup a ice:Topping;
+	rdfs:label "Eierlikörsirup"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "true" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "false" ;
+	ice:containsGluten "true" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "false" .
+
+	ice:Walnüsse a ice:Topping;
+	rdfs:label "Walnüsse"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "false" ;
+	ice:containsNuts "true" ;
+	ice:isVegan "true" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "true" ;
+	ice:containsFructose "false" .
+
+	ice:Haselnüsse a ice:Topping;
+	rdfs:label "Haselnüsse"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "false" ;
+	ice:containsNuts "true" ;
+	ice:isVegan "true" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "true" ;
+	ice:containsFructose "false" .
+
+	ice:Schokoriegel a ice:Topping;
+	rdfs:label "Schokoriegel"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "true" ;
+	ice:containsNuts "true" ;
+	ice:isVegan "false" ;
+	ice:containsGluten "true" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "false" .
+
+	ice:Erdnussbutter a ice:Topping;
+	rdfs:label "Erdnussbutter"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "false" ;
+	ice:containsNuts "true" ;
+	ice:isVegan "true" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "true" ;
+	ice:containsFructose "false" .
+
+	ice:SaltedCaramel a ice:Topping;
+	rdfs:label "Salted Caramel"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "false" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "true" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "false" .
+
+	ice:Erdbeeren a ice:Topping;
+	rdfs:label "Erdbeeren"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "false" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "true" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "true" .
+
+	ice:Himbeeren a ice:Topping;
+	rdfs:label "Himbeeren"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "false" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "true" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "true" .
+
+	ice:Blaubeeren a ice:Topping;
+	rdfs:label "Blaubeeren"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "false" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "true" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "true" .
+
+	ice:Mandeln a ice:Topping;
+	rdfs:label "Mandeln"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "falsee" ;
+	ice:containsNuts "true" ;
+	ice:isVegan "true" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "true" ;
+	ice:containsFructose "false" .
+
+	ice:Kirschsauce a ice:Topping;
+	rdfs:label "Kirschsauce"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "false" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "true" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "true" .
+
+	ice:Apfelzimtsauce a ice:Topping;
+	rdfs:label "Apfelzimtsauce"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "false" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "true" ;
+	ice:containsGluten "true" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "true" .
+
+	ice:Banane a ice:Topping;
+	rdfs:label "Banane"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "false" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "true" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "true" .
+
+	ice:Honig a ice:Topping;
+	rdfs:label "Honig"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "false" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "false" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "false" .
+
+	ice:Kaffeesauce a ice:Topping;
+	rdfs:label "Kaffeesauce"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "false" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "true" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "true" ;
+	ice:containsFructose "false" .
+
+	ice:Kokosnussstreusel a ice:Topping;
+	rdfs:label "Kokosnussstreusel"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "false" ;
+	ice:containsNuts "true" ;
+	ice:isVegan "true" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "true" ;
+	ice:containsFructose "false" .
+
+	ice:Minzsauce a ice:Topping;
+	rdfs:label "Minzsauce"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "false" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "true" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "false" .
+
+	ice:Minzblätter a ice:Topping;
+	rdfs:label "Minzblätter"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "false" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "true" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "true" ;
+	ice:containsFructose "false" .
+
+	ice:Rumsirup a ice:Topping;
+	rdfs:label "Rumsirup"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "true" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "false" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "false" .
+
+	ice:Mangosauce a ice:Topping;
+	rdfs:label "Mangosauce"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "false" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "true" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "true" .
+
+	ice:Waldbeeren a ice:Topping;
+	rdfs:label "Waldbeeren"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "false" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "true" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "true" .
+
+	ice:Zimt a ice:Topping;
+	rdfs:label "Zimt"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "false" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "true" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "true" ;
+	ice:containsFructose "false" .
+
+	ice:Zitronensaft a ice:Topping;
+	rdfs:label "Zitronensaft"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "false" ;
+	ice:containsNuts "false" ;
+	ice:isVegan "true" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "true" ;
+	ice:containsFructose "true" .
+
+	ice:FerreroRocher a ice:Topping;
+	rdfs:label "Ferrero Rocher"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "true" ;
+	ice:containsNuts "true" ;
+	ice:isVegan "false" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "false" .
+
+	ice:Raffaelo a ice:Topping;
+	rdfs:label "Raffaelo"@de ;
+	rdfs:comment ""@de ;
+	ice:containsLactose "true" ;
+	ice:containsNuts "true" ;
+	ice:isVegan "false" ;
+	ice:containsGluten "false" ;
+	ice:isSugarfree "false" ;
+	ice:containsFructose "false" .
+
+### Container Type ###
+
+	ice:Waffle a ice:ContainerType;
+	rdfs:label "Waffel"@de ;
+	rdfs:comment ""@de .
+
+	ice:VeganWaffle a ice:ContainerType;
+	rdfs:label "Vegane Waffel"@de ;
+	rdfs:comment ""@de .
+
+	ice:GlutenfreeWaffle a ice:ContainerType;
+	rdfs:label "Glutenfreie Waffel"@de ;
+	rdfs:comment ""@de .
+
+	ice:Cup a ice:ContainerType;
+	rdfs:label "Becher"@de ;
+	rdfs:comment ""@de .
+
+	ice:TakeawayCup a ice:ContainerType;
+	rdfs:label "Mitnahme-Becher"@de ;
+	rdfs:comment ""@de .
